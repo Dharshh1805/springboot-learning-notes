@@ -1,0 +1,5 @@
+spring.application.name=Contact-demo
+spring.datasource.url=jdbc:mySql://localhost:3306/calllogs
+spring.datasource.username=user
+spring.datasource.password=Dharshini@05
+
