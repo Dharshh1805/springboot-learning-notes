@@ -1,0 +1,63 @@
+package com.contactManagement.Contact_demo.controllers;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.contactManagement.Contact_demo.models.CallLogEntity;
+import com.contactManagement.Contact_demo.repositories.CallLogInterface;
+
+@RestController
+@RequestMapping("/test")
+public class callLogControllers {
+	@Autowired
+	CallLogInterface callrepo;
+	
+	@GetMapping()
+	public List<CallLogEntity> getAllCalls()
+	{
+		return callrepo.findAll();
+	}
+	@GetMapping("/calllogs/{id}")
+	public Optional<CallLogEntity> getCallsById(@PathVariable Long id)
+	{
+		return callrepo.findById(id);
+	}
+	@PostMapping("/calllogs/add")
+	public void createCallLogs(@RequestBody CallLogEntity callLogs)
+	{
+		callrepo.save(callLogs);
+	}
+	@PutMapping("/calllogs/{id}")
+	
+	public CallLogEntity updateCallLogs(@PathVariable Long id)
+	{
+		CallLogEntity calls=callrepo.findById(id).get();
+		calls.setName("xyz");
+		calls.setEmail("xyz@gmail.com");
+		calls.setPhone(7804562315L);
+		calls.setAddress("Chennai");
+		callrepo.save(calls);
+		return calls;
+		
+	}
+	@DeleteMapping("/calllogs/delete/{id}")
+	public void deleteCallLogs(@PathVariable Long id)
+	{
+		CallLogEntity call=callrepo.findById(id).get();
+		callrepo.delete(call);
+		
+	}
+
+}
